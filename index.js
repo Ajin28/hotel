@@ -26,10 +26,22 @@ mongoose.connection.on("connected", () => {
     console.log("db connected");
 })
 
-
+app.use((req, res, next) => {
+    console.log("I am a Middleware");
+    next()
+})
 app.use(express.json())
 app.use("/hotel/v1", hotel_router)
-
+app.use((err, req, res, next) => {
+    console.log("I am a Error Handling Middleware");
+    const errorStatus = err.status || 500
+    const errorMessage = err.message || "Something went wrong!"
+    return res.status(errorStatus).json({
+        status: 0,
+        message: errorMessage,
+        stack: err.stack
+    })
+})
 
 
 app.listen(8000, () => {

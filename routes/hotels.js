@@ -36,12 +36,13 @@ router.delete("/:id", async (req, res) => {
 })
 
 // get
-router.get("/:id", async (req, res) => {
+router.get("/:id", async (req, res, next) => {
     try {
         const getHotel = await Hotel.findById(req.params.id)
-        res.status(200).json(get)
+        res.status(200).json(getHotel)
     } catch (e) {
-        res.status(500).json(e)
+        // res.status(500).json(e)
+        next(e)
     }
 })
 
