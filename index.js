@@ -5,6 +5,7 @@ import room_router from "./routes/rooms.js"
 import user_router from "./routes/users.js"
 import auth_router from "./routes/auth.js"
 import mongoose from "mongoose"
+import cookieParser from "cookie-parser"
 
 dotenv.config()
 const app = express()
@@ -26,6 +27,7 @@ mongoose.connection.on("connected", () => {
     console.log("db connected");
 })
 
+app.use(cookieParser())
 app.use((req, res, next) => {
     console.log("I am a Middleware");
     next()
@@ -33,6 +35,8 @@ app.use((req, res, next) => {
 app.use(express.json())
 app.use("/auth/v1", auth_router)
 app.use("/hotel/v1", hotel_router)
+app.use("/user/v1", user_router)
+
 app.use((err, req, res, next) => {
     console.log("I am a Error Handling Middleware");
     const errorStatus = err.status || 500
