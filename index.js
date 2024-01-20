@@ -36,6 +36,8 @@ app.use(express.json())
 app.use("/auth/v1", auth_router)
 app.use("/hotel/v1", hotel_router)
 app.use("/user/v1", user_router)
+app.use("/room/v1", room_router)
+
 
 app.use((err, req, res, next) => {
     console.log("I am a Error Handling Middleware");
